@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Teams</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            height: 100%;
+        }
+
+        .navbar {
+            background-color: #3a8b8c;
+            padding: 10px;
+        }
+
+        .navbar-brand:hover {
+            color: rgba(255, 255, 255, 0.518);
+        }
+
+        .navbar-brand {
+            color: rgb(255, 255, 255);
+            font-size: 24px;
+            margin-right: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            max-width: 100%;
+        }
+
+        .teams {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 50%;
+        }
+
+        .team-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 46%; /* Duas colunas */
+        }
+
+        .team-logo img {
+            width: 100%;
+            max-height: 150px;
+            object-fit: contain;
+        }
+
+        .team-detail {
+            margin: 5px 0;
+        }
+
+        .form-container {
+            width: 30%; /* O formulário ocupa 30% da largura */
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .name-to-search {
+            padding: 10px;
+            border: 2px solid #3a8b8c;
+            border-radius: 5px;
+            font-size: 18px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .search-team-form {
+            padding: 10px 20px;
+            background-color: #3a8b8c;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        .search-team-form:hover {
+            background-color: #463caf;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="bt-container">
+                <a class="navbar-brand" href="/site/menu">Foccacia Home Page</a>
+                <a class="navbar-brand" href="/site/groups">All Groups</a>
+                <a class="navbar-brand" href="/site/teams">All Teams</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="teams">
+            <h3>All Teams</h3>
+            {{#each allTeams}}
+            <div class="team-card">
+                <div class="team-logo">
+                    <img src="{{this.image}}" alt="{{this.name}} Logo">
+                </div>
+                <p class="team-detail"><strong>Name:</strong> {{this.name}}</p>
+                <p class="team-detail"><strong>Venue:</strong> {{this.venue}}</p>
+                <p class="team-detail"><strong>League:</strong> {{this.league}}</p>
+                <p class="team-detail"><strong>Season:</strong> {{this.season}}</p>
+            </div>
+            {{/each}}
+        </div>
+
+        <div class="form-container">
+            <h2>Search by name</h2>
+            <form id="searchForm" onsubmit="searchByName(event)">
+                <input type="text" id="teamName" name="teamName" placeholder="Name" class="name-to-search">
+                <br>
+                <input type="submit" value="Search" class="search-team-form">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function searchByName(event) {
+            event.preventDefault(); 
+            var teamName = document.getElementById('teamName').value;
+            window.location.href = '/site/teams/' + teamName; 
+        }
+    </script>
+</body>
+
+</html>

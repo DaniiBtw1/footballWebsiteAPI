@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>All Your Groups</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #3a8b8c;
+            padding: 10px;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-size: 24px;
+            margin-right: 20px;
+        }
+
+        .navbar-brand:hover {
+            color: rgba(255, 255, 255, 0.518)
+        }
+
+
+        .logout {
+            margin-left: 400px;
+            background-color: transparent;
+            border: none;
+        }
+
+        .container {
+            max-width: 1225px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-top: 60px;
+            margin-bottom: 20px;
+        }
+
+        .group-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+
+        .group-card {
+            width: 1200px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+
+        }
+
+        .bt-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .group-card:hover {
+            transform: scale(1.05);
+        }
+
+        .group-name {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .group-info {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .group-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #3a8b8c;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .create-group {
+            text-align: center;
+            margin: auto;
+            width: 50%;
+        }
+
+        .create-group-form {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .create-group-button {
+            padding: 10px;
+            background-color: #3a8b8c;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back {
+            text-align: center;
+            margin: auto;
+            width: 11%;
+        }
+
+        .back-button-form {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .back-button {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #3a8b8c;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="bt-container">
+                <a class="navbar-brand" href="/site/menu">Foccacia Home Page</a>
+                <a class="navbar-brand" href="/site/groups">All Groups</a>
+                <a class="navbar-brand" href="/site/Teams">All Teams</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="section-title">{{username}}'s Groups</h1>
+        <div class="group-list">
+            {{#each groups}}
+            <div class="group-card">
+                <div class="group-info">
+                    <p class="group-name">{{this.name}}</p>
+                    <p class="group-info"><strong>Description:</strong> {{this.description}}</p>
+                    {{#if this.teams}}
+                    <p class="group-info"><strong>Teams:</strong></p>
+                    <ul>
+                        {{#each this.teams}}
+                        <li>
+                            <p class="group-info"><strong>Name:</strong> {{this.name}}</p>
+                            <p class="group-info"><strong>Logo:</strong> {{this.logo}}</p>
+                            <p class="group-info"><strong>Venue:</strong> {{this.venue}}</p>
+                        </li>
+                        {{/each}}
+                    </ul>
+                    {{/if}}
+                    <form method="GET" action="/site/groups/{{this.id}}">
+                        <div class="bt-container">
+                            <input type="submit" value="View Group{{inc @index}}" class="group-button">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        <br>
+        <div class="create-group">
+            <form method="GET" action="/site/groups/new" class="create-group-form">
+                <div class="bt-container">
+                    <button type="submit" value="Create Group" class="create-group-button">Create Group</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="back">
+            <form method="GET" action="/site/menu">
+                <div class="back-button-form">
+                    <button type="submit" value="Back" class="back-button">Back</button>
+                </div>
+            </form>
+        </div>
+        <br>
+    </div>
+
+    <br>
+</body>
+
+</html>

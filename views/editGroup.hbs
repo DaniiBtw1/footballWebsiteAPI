@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Group By Id</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #3a8b8c;
+            padding: 10px;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-size: 24px;
+            margin-right: 20px;
+        }
+
+        .navbar-brand:hover {
+            color: rgba(255, 255, 255, 0.518)
+        }
+
+        .logout {
+            margin-left: 400px;
+            background-color: transparent;
+            border: none;
+        }
+
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-top: 60px;
+            margin-bottom: 80px;
+        }
+
+        .group-detail {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .group-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #3a8b8c;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .edit-group {
+            margin: auto;
+            width: 50%;
+        }
+
+        .edit-group-form {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .edit-group-input {
+            padding: 10px;
+            border: 1px solid #3a8b8c;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        .edit-group-button {
+            padding: 10px;
+            background-color: #3a8b8c;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="bt-container">
+                <a class="navbar-brand" href="/site/menu">Foccacia Home Page</a>
+                <a class="navbar-brand" href="/site/groups">All Groups</a>
+                <a class="navbar-brand" href="/site/teams">All Teams</a>
+            </div>
+        </div>
+    </nav>
+    <div class="section">
+        <div class="container">
+            <h1 class="section-title">Group: {{group.name}}</h1>
+            <div class="group-detail">
+                <p class="group-detail"><strong>ID:</strong>{{group.id}}</p>
+                <p class="group-detail"><strong>Name:</strong>{{group.name}}</p>
+                <p class="group-detail"><strong>Description:</strong> {{group.description}}</p>
+            </div>
+            <div class="edit-group">
+                <h2>Edit Group</h2>
+                <form method="POST" action="/site/groups/{{group.id}}/edit" class="edit-group-form">
+                    <input type="text" name="name" value="" placeholder="Name" class="edit-group-input">
+                    <input type="text" name="description" value="" placeholder="Description" class="edit-group-input">
+                    <button type="submit" value="Save Changes" class="edit-group-button">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

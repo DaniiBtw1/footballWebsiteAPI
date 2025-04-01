@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Create New Team</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #3a8b8c;
+            padding: 10px;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-size: 24px;
+            margin-right: 20px;
+        }
+
+        .navbar-brand:hover {
+            color: rgba(255, 255, 255, 0.518);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-top: 60px;
+            margin-bottom: 20px;
+        }
+
+        .create-team {
+            margin: auto;
+            width: 50%;
+        }
+
+        .create-team-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .create-team-input {
+            padding: 10px;
+            border: 1px solid #3a8b8c;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        .create-team-button {
+            padding: 10px;
+            background-color: #3a8b8c;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="bt-container">
+                <a class="navbar-brand" href="/site/menu">Foccacia Home Page</a>
+                <a class="navbar-brand" href="/site/groups">All Groups</a>
+                <a class="navbar-brand" href="/site/teams">All Teams</a>
+            </div>
+        </div>
+    </nav>
+    <div class="section">
+        <div class="container">
+            <h1 class="section-title">Create New Team</h1>
+            <div class="create-team">
+                <form method="POST" id="createTeamForm" action="/site/groups/{{groupId}}/selectRestInfo">
+                    <input type="text" id="teamName" name="teamName" placeholder="Team Name" class="create-team-input" required>
+                    <input type="button" value="Create Team" onclick="confirmCreateTeam()" class="create-team-button">
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        function confirmCreateTeam() {
+            //var confirmation = confirm("Are you sure you want to create this team?");
+            //if (confirmation) {
+                document.getElementById("createTeamForm").submit();
+            //}
+        }
+    </script>
+</body>
+
+</html>

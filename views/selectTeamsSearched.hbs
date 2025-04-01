@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Teams Found</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .team-card {
+            display: inline-block;
+            width: 45%;
+            margin: 2%;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .team-venue {
+            margin: 10px 0;
+            color: #555;
+        }
+
+        .select-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #3a8b8c;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .select-button:hover {
+            background-color: #3a8b8c;
+        }
+
+        .dropdown-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .add-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #3a8b8c;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-button:hover {
+            background-color: #3a8b8c;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-center">Select a Team</h1>
+        {{#if teams}}
+        <div class="teams-container">
+            {{#each teams}}
+            <div class="team-card" data-team='{{{json this}}}'>
+                <p class="team-name"><strong>Name:</strong> {{this.team.name}}</p>
+                <p class="team-venue"><strong>Venue:</strong> {{this.team.venue}}</p>
+                <button class="select-button">Select</button>
+            </div>
+            {{/each}}
+        </div>
+        {{else}}
+        <p class="text-center">No teams found.</p>
+        {{/if}}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.select-button').forEach(button => {
+                button.addEventListener('click', event => {
+                    const teamCard = event.target.closest('.team-card');
+                    const teamData = JSON.parse(teamCard.dataset.team);
+
+                    document.body.innerHTML = '';
+
+                    const dropdownContainer = document.createElement('div');
+                    dropdownContainer.classList.add('dropdown-container');
+                    dropdownContainer.innerHTML = `
+                        <h2>Team: ${teamData.team.name}</h2>
+                        <label for="leagueDropdown">Select a League:</label>
+                        <select id="leagueDropdown" class="form-control">
+                            <option value="" disabled selected>Select a league</option>
+                            ${teamData.leagues.map((league, i) => `<option value="${i}">${league.name}</option>`).join('')}
+                        </select>
+                        <div id="seasonContainer" style="margin-top: 20px; display: none;">
+                            <label for="seasonDropdown">Select a Season:</label>
+                            <select id="seasonDropdown" class="form-control">
+                                <option value="" disabled selected>Select a season</option>
+                            </select>
+                        </div>
+                        <button id="addTeamButton" class="add-button" style="display: none;">Adicionar Equipa</button>
+                    `;
+                    document.body.appendChild(dropdownContainer);
+                    const groupId = "{{groupId}}"
+                    console.log("TESTAR DENTRO DO HTML", groupId)
+                    const leagueDropdown = document.getElementById('leagueDropdown');
+                    const seasonDropdown = document.getElementById('seasonDropdown');
+                    const addButton = document.getElementById('addTeamButton');
+
+                    leagueDropdown.addEventListener('change', function () {
+                        const leagueIndex = this.value;
+                        const selectedLeague = teamData.leagues[leagueIndex];
+
+                        seasonDropdown.innerHTML = '<option value="" disabled selected>Select a season</option>';
+                        selectedLeague.seasons.forEach(season => {
+                            const option = document.createElement('option');
+                            option.value = season.year; // Usar o ano como valor
+                            option.textContent = season.year; // Exibir o ano
+                            seasonDropdown.appendChild(option);
+                        });
+
+                        document.getElementById('seasonContainer').style.display = 'block';
+                    });
+
+                    seasonDropdown.addEventListener('change', function () {
+                        addButton.style.display = 'inline-block';
+                    });
+
+                    addButton.addEventListener('click', () => {
+                        const selectedLeagueIndex = leagueDropdown.value;
+                        const selectedSeasonYear = seasonDropdown.value;
+                        const selectedLeague = teamData.leagues[selectedLeagueIndex];
+
+                        const payload = {
+                            team: teamData.team.name,
+                            league: selectedLeague.name,
+                            season: selectedSeasonYear
+                        };
+
+                        fetch(`/site/groups/${groupId}/added`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        })
+                            .then(response => {
+                                if (response.ok) {
+                                    alert('Equipa adicionada com sucesso!');
+                                } else {
+                                    alert('Erro ao adicionar a equipa.');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Erro na requisição:', error);
+                                alert('Erro ao adicionar a equipa.');
+                            });
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Teams</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+       
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #3a8b8c;
+            padding: 10px;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-size: 24px;
+            margin-right: 20px;
+        }
+
+        .navbar-brand:hover {
+            color: rgba(255, 255, 255, 0.518);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-top: 60px;
+            margin-bottom: 20px;
+        }
+
+        .team-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .team-card {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            transition: transform 0.3s;
+        }
+
+        .team-card:hover {
+            transform: scale(1.05);
+        }
+
+        .team-name {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .team-detail {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .team-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .delete-team-button {
+            padding: 10px;
+            background-color: #d9534f;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #3a8b8c;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="/site/menu">Foccacia Home Page</a>
+            <a class="navbar-brand" href="/site/groups">All Groups</a>
+            <a class="navbar-brand" href="/site/teams">All Teams</a>
+        </div>
+    </nav>
+
+    <div class="section">
+        <div class="container">
+            <h1 class="section-title">Teams</h1>
+
+            <div class="team-info">
+               
+                {{#each teams}}
+                <div class="team-card">
+                    <div class="team-logo">
+                        <img src="{{this.team.image}}" alt="{{this.team.name}} Logo">
+                    </div>
+                    <p class="team-detail"><strong>Name:</strong> {{this.team.name}}</p>
+                    <p class="team-detail"><strong>Venue:</strong> {{this.team.venue}}</p>
+                    
+                    <h4>Leagues:</h4>
+                    <ul>
+                        {{#each this.leagues}}
+                        <li>{{this.name}}</li>
+                        {{/each}}
+                    </ul>
+                
+                </div>
+                {{/each}}
+            </div>
+
+            <div class="back">
+                <form method="GET" action="/site/teams">
+                    <button type="submit" class="back-button">Back</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

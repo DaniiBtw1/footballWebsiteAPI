@@ -1,0 +1,238 @@
+@prefix = http://localhost:3000/api
+
+@tokenUser1 = 4d75a57d-eb8a-40f8-966f-a2591dd618b6
+@tokenUser2 = 3efa8c5d-a9f4-4d71-be2d-8d9347e540c0
+@tokenUser2 = 7f2cca7b-ff95-48a7-9f84-aafad1553991
+@tokenUserNonExisting = 3efa8c5d-a9f4-4d71-be2d-8d9347e540c1
+
+@token = {{tokenUser1}}
+
+### List/Search all groups
+GET {{prefix}}/groups
+Authorization: Basic {{token}}
+
+### List/Search TEAMS
+#GET {{prefix}}/allTeams
+#Authorization: Basic {{token}}
+
+### Get group details 
+GET {{prefix}}/groups/h5NA9JMBlMKHFtTK7qWr
+Authorization: Basic {{token}}
+
+### Delete group
+DELETE {{prefix}}/groups/WHSuCJQBjWu8kFpgSusa
+Authorization: Basic {{token}}
+
+### Update group
+PUT {{prefix}}/groups/WXSuCJQBjWu8kFpg_-uE
+Authorization: Basic {{token}}
+Content-Type: application/json
+
+{
+  "name": "Pior clube",
+  "description": "ou seja O PIOR CLUBE"
+}
+
+
+### Create group  
+POST {{prefix}}/groups
+Authorization: Basic {{token}}
+Content-Type: application/json
+
+{
+   "name": "Pior clube",
+   "description": "ou seja o Sporting"
+}
+
+### Delete team from group 
+DELETE {{prefix}}/groups/WXSuCJQBjWu8kFpg_-u/Benfica
+Authorization: Basic {{token}}
+Content-Type: application/json
+
+{
+   "league": "liga das canelas",
+   "season": "2021"            
+}
+
+### Get team from ExtApi, Necessary token because it is a tool of my API, so I believe it is better to demand the user to have a token
+GET {{prefix}}/teams?name=Barcelona
+Authorization: Basic {{token}}
+
+### Get league from ExtApi, Necessary token because it is a tool of my API, so I believe it is better to demand the user to have a token
+GET {{prefix}}/leagues?teamName=sertanense
+Authorization: Basic {{token}}
+
+### Update group adding Team 
+PUT {{prefix}}/groups/WXSuCJQBjWu8kFpg_-uE/Benfica
+Authorization: Basic {{token}}
+Content-Type: application/json
+
+{
+   "league": "Primeira Liga",
+   "season": "2010"            
+} 
+
+###empty Users table
+POST http://localhost:9200/users/_delete_by_query
+Content-Type: application/json
+
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+###empty groups table
+POST http://localhost:9200/groups/_delete_by_query
+Content-Type: application/json
+
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+### add index group
+PUT http://localhost:9200/groups
+Content-Type: application/json
+
+{
+  "mappings": {
+    "properties": {
+      "description": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "doc": {
+        "properties": {
+          "description": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "name": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          }
+        }
+      },
+      "id": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "name": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "ownerId": {
+        "type": "keyword"
+      },
+      "teams": { 
+        "type": "nested", 
+        "properties": {
+          "name": { "type": "text" },
+          "image": { "type": "keyword" },
+          "teamId": { "type": "long" },
+          "venue": { "type": "text" },
+          "league": { "type": "text" },
+          "leagueId": { "type": "long" },
+          "season": { "type": "long" }
+        }
+      },
+      "updateCount": {
+        "type": "long"
+      }
+    }
+  }
+}
+
+
+
+
+###check groups DB
+GET http://localhost:9200/groups/_search
+Content-Type: application/json
+
+###check Users DB
+GET http://localhost:9200/users/_search
+Content-Type: application/json
+
+### Create  newUser
+POST {{prefix}}/user
+Content-Type: application/json
+
+{
+   "name": "h",
+   "email": "novomaria@gmail.com",
+   "password": "password"      
+}
+
+### Get Team Details  
+POST {{prefix}}/notTeam
+Authorization: Basic {{token}}
+Content-Type: application/json
+
+{
+   "name": "Benfica"
+}
+
+
+### Non registred route
+#GET {{prefix}}/dsfdsfds 
+
+### Users
+PUT http://localhost:9200/users
+Content-Type: application/json
+
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 1
+  },
+  "mappings": {
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "name": {
+        "type": "text"
+      },
+      "email": {
+        "type": "keyword"
+      },
+      "userToken": {
+        "type": "keyword"
+      },
+      "password": {
+        "type": "keyword"
+      }
+    }
+  }
+}
+
+
+

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Group By Id</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color:#3a8b8c;
+            padding: 10px;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-size: 24px;
+        }
+
+        .navbar-brand:hover {
+            color: rgba(255, 255, 255, 0.518)
+        }
+
+        .logout {
+            margin-left: 400px;
+            background-color: transparent;
+            border: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-top: 60px;
+            margin-bottom: 20px;
+        }
+
+        .group-info {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+
+        .group-name {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .group-detail {
+            
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .group-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #3a8b8c;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .edit-group {
+            margin: auto;
+            width: 50%;
+        }
+
+        .edit-group-form {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .add-team-group  {
+            
+            margin: auto;
+            width: 50%;
+        }
+
+        .add-team-group-form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .back {
+            margin: auto;
+            width: 50%;
+        }
+
+        .back-button-form {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .back-button {
+            margin-bottom: 20px;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #3a8b8c;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .operation-group-button {
+            padding: 10px;
+            background-color: #3a8b8c;
+            color: white;
+            font-size: 18px;
+            gap: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .delete-group {
+            margin: auto;
+            width: 50%;
+        }
+
+        .delete-group-form {
+
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+
+        .team-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .team-card {
+            width: 1175px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .team-card:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="bt-container">
+                <a class="navbar-brand" href="/site/menu">Foccacia Home Page</a>
+                <a class="navbar-brand" href="/site/groups">All Groups</a>
+                <a class="navbar-brand" href="/site/teams">All Teams</a>
+            </div>
+        </div>
+    </nav>
+    <div class="section">
+        <div class="container">
+            <h1 class="section-title">Group: {{group.name}}</h1>
+            <div class="group-info">
+                <div class="group-detail">
+                    <p class="group-detail"><strong>Description:</strong> {{group.description}}</p>
+                    <p class="group-detail"><strong>Teams:</strong></p>
+                </div>
+                {{#if group.teams}}
+                <div class="team-list">
+                    {{#each group.teams}}
+                    <div class="team-card">
+                        <p class="group-detail"><strong>Name:</strong> {{this.name}}</p>
+                        <p class="group-detail"><strong>Venue:</strong> {{this.venue}}</p>
+                        <p class="group-detail"><strong>League:</strong> {{this.league}}</p>
+                        <p class="group-detail"><strong>Season:</strong> {{this.season}}</p>
+
+                        <div class="delete-team-group">
+                            <form method="POST" id="deleteTeamGroup" 
+                                action="/site/groups/{{../group.id}}/{{this.name}}/delete" 
+                                class="delete-team-group">
+                            <input type="button" value="Delete team from Group" 
+                                onclick="confirmTeamDelete('{{this.name}}')" 
+                                class="operation-group-button">
+                        </form>
+                    </div>
+                    </div>
+                    {{/each}}
+                </div>
+                <br>
+                {{/if}}
+            </div>
+            <div class="edit-group">
+                <form method="GET" action="/site/groups/{{group.id}}/edit" class="edit-group-form">
+                    <button type="submit" value="Edit Group" class="operation-group-button">Edit Group</button>
+                </form>
+            </div>
+            <br>
+            <div class="delete-group">
+                <form method="POST" id="deleteForm" action="/site/groups/{{group.id}}/delete" class="delete-group-form">
+                    <input type="button" value="Delete Group" onclick="confirmDelete()" class="operation-group-button">
+                </form>
+            </div>
+            <div class="add-team-group">
+                <form method="POST" id="addTeamGroup" action="/site/groups/{{group.id}}/add" class="add-team-group-form">
+                    <input type="button" value="Add team to Group" onclick="confirmAddTeam()" class="operation-group-button">
+                </form>
+            </div>
+            <div class="back">
+                <form method="GET" action="/site/groups">
+                    <div class="back-button-form">
+                        <button type="submit" value="Back" class="back-button">Back</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function confirmDelete() {
+            var confirmation = confirm("Are you sure you want to delete this group?");
+            if (confirmation) {
+                document.getElementById("deleteForm").submit();
+            }
+        }
+
+        function confirmTeamDelete() {
+            var confirmation = confirm("Are you sure you want to delete this team from this group?");
+            if (confirmation) {
+                document.getElementById("deleteTeamGroup").submit();
+            }
+        }
+
+        function confirmAddTeam() {
+                document.getElementById("addTeamGroup").submit();
+        }
+        
+    </script>
+</body>
+
+</html>

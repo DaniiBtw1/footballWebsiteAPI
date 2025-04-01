@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #3a8b8c;
+            padding: 10px;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-size: 24px;
+        }
+
+        .navbar-brand:hover {
+            color: rgba(255, 255, 255, 0.518);
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .edit-user-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-input {
+            padding: 10px;
+            border: 1px solid #3a8b8c;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        .form-button {
+            padding: 10px;
+            background-color: #3a8b8c;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-button:disabled {
+            background-color: gray;
+            cursor: not-allowed;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #3a8b8c;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="/site/menu">Back to Menu</a>
+        </div>
+    </nav>
+    <div class="container">
+        <h1 class="section-title">Edit User Profile</h1>
+        <form method="POST" action="/site/validateUserChanges" class="edit-user-form" id="userForm">
+            <input type="text" name="name" id="userName" value="{{user.name}}" placeholder="Name" class="form-input" required>
+            <input type="email" name="email" id="userEmail" value="{{user.email}}" placeholder="Email" class="form-input" required>
+            <input type="password" name="password" id="userPassword" value="{{user.password}}" placeholder="Password" class="form-input" required>
+            <button type="submit" id="submitButton" class="form-button" disabled>Edit User Data</button>
+        </form>
+        <form method="GET" action="/site/logout">
+            <button type="submit" class="back-button">Logout</button>
+        </form>
+    </div>
+
+    <script>
+        
+        const userForm = document.getElementById('userForm');
+        const submitButton = document.getElementById('submitButton');
+        const inputs = Array.from(userForm.querySelectorAll('.form-input'));
+
+        
+        const userBeforeChanges = JSON.stringify({
+            name: "{{user.name}}",
+            email: "{{user.email}}",
+            password: "{{user.password}}"
+        });
+
+       
+        const checkInputs = () => {
+            const allFilled = inputs.every(input => input.value.trim() !== "");
+            submitButton.disabled = !allFilled;
+        };
+
+        
+        checkInputs();
+
+        
+        inputs.forEach(input => {
+            input.addEventListener('input', checkInputs);
+        });
+
+        
+        userForm.addEventListener('submit', (event) => {
+            
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'beforeChanges';
+            hiddenInput.value = userBeforeChanges;
+
+           
+            userForm.appendChild(hiddenInput);
+        });
+    </script>
+</body>
+
+</html>

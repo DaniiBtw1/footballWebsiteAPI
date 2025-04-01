@@ -1,0 +1,129 @@
+<html>
+
+<head>
+    <title>Create User</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .create-user-container {
+            margin: auto;
+            width: 50%;
+        }
+
+        .create-user-form {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .create-user-input {
+            padding: 10px;
+            border: 1px solid #3a8b8c;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        .create-user-button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #3a8b8c;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .create-user-button:disabled {
+            background-color: #ddd;
+            cursor: not-allowed;
+        }
+
+        .container {
+            max-width: 1225px;
+            margin: 0 auto;
+        }
+
+        .bt-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar {
+            background-color: #3a8b8c;
+            padding: 10px;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-size: 24px;
+            margin-right: 20px;
+        }
+
+        .navbar-brand:hover {
+            color: rgba(255, 255, 255, 0.518)
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-top: 60px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    {{#if error}}
+    <script>alert('{{error}}');</script>
+    {{/if}}
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="bt-container">
+                <a class="navbar-brand" href="/site/menu">Foccacia Home Page</a>
+            </div>
+        </div>
+    </nav>
+    <div class="section">
+        <div class="container">
+            <h1 class="section-title">Create an Account</h1>
+            <form method="POST" action="/site/validateToCreateUser" class="create-user-form" id="createUserForm">
+                Name: <input type="text" name="name" id="name" value="" placeholder="Your Name" class="create-user-input" required>
+                Email: <input type="email" name="email" id="email" value="" placeholder="Your Email" class="create-user-input" required>
+                Password: <input type="password" name="password" id="password" value="" placeholder="Your Password" class="create-user-input" required>
+                <button type="submit" class="create-user-button" id="submitButton" disabled>Create User</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        
+        function checkFormValidity() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const submitButton = document.getElementById('submitButton');
+
+           
+            if (name && email && password) {
+                submitButton.disabled = false;
+            } else {
+                submitButton.disabled = true;
+            }
+        }
+
+        
+        document.getElementById('name').addEventListener('input', checkFormValidity);
+        document.getElementById('email').addEventListener('input', checkFormValidity);
+        document.getElementById('password').addEventListener('input', checkFormValidity);
+    </script>
+</body>
+
+</html>

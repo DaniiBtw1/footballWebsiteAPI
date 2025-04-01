@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Main Menu</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #3a8b8c;
+            padding: 10px;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-size: 24px;
+            margin-right: 20px;
+        }
+
+        .navbar-brand:hover {
+            color: rgba(255, 255, 255, 0.518)
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-top: 60px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #3a8b8c;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="bt-container">
+                <a class="navbar-brand" href="/site/menu">Foccacia Home Page</a>
+                <a class="navbar-brand" href="/site/groups">All Groups</a>
+                <a class="navbar-brand" href="/site/teams">All Teams</a>
+            </div>
+        </div>
+    </nav>
+    <div class="section">
+        <div class="container">
+            <h1 class="section-title">Explore as nossas opções</h1>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        
+                        <div class="card-body">
+                            <h2 class="card-title">Grupos</h2>
+                            <p class="card-text">Aqui consegues fazer operações sobre grupos</p>
+                            <button class="card-button" onclick="window.location.href='/site/groups'">Ir para Grupos</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title">Teams</h2>
+                            <p class="card-text">Aqui consegue fazer operações sobre Teams</p>
+                            <button class="card-button" onclick="window.location.href='/site/teams'">Ir para Teams</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title">User</h2>
+                            <p class="card-text">Aqui consegue ver e fazer operações sobre o teu Perfil </p>
+                            <button class="card-button" onclick="window.location.href='/site/myUserInfo'">Ir para User Info</button>
+                        </div>
+                    </div>
+                </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

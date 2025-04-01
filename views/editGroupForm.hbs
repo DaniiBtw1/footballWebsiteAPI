@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Group By Id</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #3a8b8c;
+            padding: 10px;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-size: 24px;
+            margin-right: 20px;
+        }
+
+        .navbar-brand:hover {
+            color: rgba(255, 255, 255, 0.518)
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-top: 60px;
+            margin-bottom: 80px;
+        }
+
+        .group-detail {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .group-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #3a8b8c;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .edit-group {
+            margin: auto;
+            width: 50%;
+        }
+
+        .edit-group-form {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .edit-group-input {
+            padding: 10px;
+            border: 1px solid #3a8b8c;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        .edit-group-button {
+            padding: 10px;
+            background-color: #3a8b8c;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .edit-group-button:disabled {
+            background-color: gray;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="bt-container">
+                <a class="navbar-brand" href="/site/menu">Foccacia Home Page</a>
+                <a class="navbar-brand" href="/site/users">All Users</a>
+                <a class="navbar-brand" href="/site/groups">All Groups</a>
+                <a class="navbar-brand" href="/site/teams">All Teams</a>
+            </div>
+        </div>
+    </nav>
+    <div class="section">
+        <div class="container">
+            <h1 class="section-title">Group: {{groupForm.name}}</h1>
+            <div class="edit-group">
+                <h2>Edit Group</h2>
+                <form method="POST" action="/site/groups/{{groupForm.id}}/edit" class="edit-group-form">
+                    <input type="text" name="name" id="groupName" value="{{groupForm.name}}" placeholder="Name" class="edit-group-input">
+                    <input type="text" name="description" id="groupDescription" value="{{groupForm.description}}" placeholder="Description" class="edit-group-input">
+                    <button type="submit" id="submitButton" class="edit-group-button" disabled>Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        const nameInput = document.getElementById('groupName');
+        const descriptionInput = document.getElementById('groupDescription');
+        const submitButton = document.getElementById('submitButton');
+
+        function validateInputs() {
+            const isNameFilled = nameInput.value.trim() !== '';
+            const isDescriptionFilled = descriptionInput.value.trim() !== '';
+            submitButton.disabled = !(isNameFilled && isDescriptionFilled);
+        }
+
+        nameInput.addEventListener('input', validateInputs);
+        descriptionInput.addEventListener('input', validateInputs);
+
+        
+        validateInputs();
+    </script>
+</body>
+
+</html>

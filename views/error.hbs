@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Página de Erro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .error-container {
+            text-align: center;
+            padding-top: 50px;
+        }
+        h1 {
+            color: #dc3545;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <h1>Oops! Algo deu errado.</h1>
+        <p>{{error.message}}</p>
+        <p>Desculpe pelo inconveniente. Por favor, tente novamente mais tarde.</p>
+        <h2>Menu</h2>
+        <button onclick="window.location.href='/site/menu'">MainMenu</button>
+    </div>
+</body>
+</html>

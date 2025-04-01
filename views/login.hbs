@@ -1,0 +1,115 @@
+<html>
+
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .login-form {
+            margin: auto;
+            width: 70%;
+        }
+
+        .login-form-input {
+            padding: 10px;
+            border: 1px solid #3a8b8c;
+            border-radius: 5px;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .login-form-button {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #3a8b8c;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1225px;
+            margin: 0 auto;
+        }
+
+        .bt-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar {
+            background-color: #3a8b8c;
+            padding: 10px;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-size: 24px;
+            margin-right: 20px;
+        }
+
+        .navbar-brand:hover {
+            color: rgba(255, 255, 255, 0.518)
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-top: 60px;
+            margin-bottom: 20px;
+        }
+
+        .create-user-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #3a8b8c;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    {{#if error}}
+    <script>alert('{{error}}');</script>
+    {{/if}}
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="bt-container">
+                <a class="navbar-brand" href="/site/menu">Foccacia Home Page</a>
+            </div>
+        </div>
+    </nav>
+    <div class="section">
+        <div class="container">
+            <h1 class="section-title">Login</h1>
+            <form method="POST" action="/site/validateLogin" class="login-form">
+                Username: <input type="text" name="username" value="" placeholder="Name" class="login-form-input">
+                Password: <input type="text" name="password" value="" placeholder="Password" class="login-form-input">
+                <button type="submit" class="login-form-button">Login</button>
+            </form>
+
+            <div class="login-form">
+                <form method="GET" action="/site/createUser" class="create-user-form">
+                    <button type="submit" class="create-user-button">Create User</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
